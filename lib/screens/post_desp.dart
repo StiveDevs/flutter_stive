@@ -12,8 +12,8 @@ class PostDescription extends StatelessWidget {
         title: Text(title),
       ),
       body: Text(
-        'Hello',
-        style: TextStyle(fontSize: 40),
+        description,
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
