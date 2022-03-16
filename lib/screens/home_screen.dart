@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stive/models/user.dart';
+import 'package:stive/screens/settings.dart';
 import 'package:stive/screens/user_feed.dart';
+
+import 'clubs.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.currUser}) : super(key: key);
@@ -29,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView(
             children: [
               drawerTile("User Feed", Icons.list),
+              drawerTile("Clubs", Icons.list),
+              drawerTile("Settings", Icons.list),
             ],
           ),
         ),
@@ -64,6 +69,10 @@ String titleSwitch(String screen) {
   switch (screen) {
     case "User Feed":
       return "User Feed";
+    case "Clubs":
+      return "Clubs";
+    case "Settings":
+      return "Settings";
     default:
       return "Huh! This is weird.";
   }
@@ -72,7 +81,11 @@ String titleSwitch(String screen) {
 Widget screenSwitch(String screen, User currUser) {
   switch (screen) {
     case "User Feed":
-      return const UserFeed();
+      return UserFeed();
+    case "Clubs":
+      return Clubs();
+    case "Settings":
+      return Settings();
     default:
       return const Text("Lmao");
   }

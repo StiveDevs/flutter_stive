@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stive/dummy/post_data.dart';
 
 class PostWidget {
   int id;
