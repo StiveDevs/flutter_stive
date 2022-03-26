@@ -26,8 +26,10 @@ class _UserFeedState extends State<UserFeed> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => PostDescription(
-                          title: DUMMY_POST[index].title,
-                          description: DUMMY_POST[index].description),
+                        title: DUMMY_POST[index].title,
+                        description: DUMMY_POST[index].description,
+                        pollAvailable: DUMMY_POST[index].pollAvailable,
+                      ),
                     ),
                   );
                 },
