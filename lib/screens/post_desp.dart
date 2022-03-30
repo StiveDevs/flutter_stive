@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:stive/widgets/poll.dart';
 
 class PostDescription extends StatelessWidget {
   String title;
   String description;
-  PostDescription({required this.title, required this.description});
+  bool pollAvailable;
+  PostDescription(
+      {required this.title,
+      required this.description,
+      required this.pollAvailable});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +16,19 @@ class PostDescription extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Text(
-        description,
-        style: TextStyle(color: Colors.white),
+      body: Column(
+        children: [
+          Text(
+            description,
+            style: TextStyle(color: Colors.white),
+          ),
+          pollAvailable
+              ? Poll()
+              : const Text(
+                  'No Poll Available',
+                  style: TextStyle(color: Colors.white),
+                ),
+        ],
       ),
     );
   }
