@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/user.dart';
 
-String ep = "http://10.0.2.2:8000/";
+String ep = "https://stive-api.herokuapp.com/";
 
 Future<User?> userById(int id) async {
   User? res;
@@ -14,7 +14,7 @@ Future<User?> userById(int id) async {
     },
   ).then((dynamic response) {
     if (response.statusCode == 200) {
-      res = User.fromJSON(response.body());
+      res = User.fromJSON(jsonDecode(response.body));
     }
   });
 
@@ -46,20 +46,21 @@ List<User> convertToUserList(dynamic dict) {
 }
 
 Future<String> createUser(User newUser) async {
-  String resp = "failed";
+  String ret = "failed";
   await http
       .post(
     Uri.parse(ep + 'student/'),
     headers: <String, String>{
       'Content-Type': 'application/json',
     },
-    body: newUser.toJson(),
+    body: jsonEncode(newUser.toJson()),
   )
       .then((dynamic response) {
-    if (response.statusCode == 201) {
-      newUser.id = jsonDecode(response.body)["insertedId"];
-      resp = "ok";
+    var resp = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      newUser.id = resp["insertedId"];
+      ret = "ok";
     }
   });
-  return resp;
+  return ret;
 }

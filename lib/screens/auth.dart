@@ -45,11 +45,7 @@ class _FlutterAuthState extends State<FlutterAuth> {
             MaterialPageRoute(
                 builder: (context) => HomeScreen(
                       currUser: User(
-                          email: '',
-                          name: '',
-                          rollNo: 1,
-                          id: 1,
-                          profilePicUrl: ''),
+                          email: '', name: '', rollNo: 1, profilePicUrl: ''),
                     )),
           );
         },
