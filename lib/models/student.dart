@@ -1,17 +1,13 @@
 class Student {
-  String id,
-      name,
-      rollNo,
-      email,
-      profilePicUrl =
-          "https://drive.google.com/uc?export=view&id=1edwpQvH_JURwGsArCc8NyPEe8EzdpzvQ";
+  String id, name, rollNo, email, profilePicUrl;
 
-  Student({
-    required this.id,
-    required this.rollNo,
-    required this.name,
-    required this.email,
-  });
+  Student(
+      {required this.id,
+      required this.rollNo,
+      required this.name,
+      required this.email,
+      this.profilePicUrl =
+          "https://drive.google.com/uc?export=view&id=1edwpQvH_JURwGsArCc8NyPEe8EzdpzvQ"});
 
   Student.fromJSON(Map<String, dynamic> json)
       : id = json["id"],

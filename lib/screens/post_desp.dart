@@ -25,7 +25,7 @@ class PostDescription extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
           pollAvailable
-              ? Poll()
+              ? PollWidget()
               : const Text(
                   'No Poll Available',
                   style: TextStyle(color: Colors.white),

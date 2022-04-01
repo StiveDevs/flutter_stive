@@ -1,14 +1,14 @@
 import 'package:polls/polls.dart';
 import 'package:flutter/material.dart';
 
-class Poll extends StatefulWidget {
-  const Poll({Key? key}) : super(key: key);
+class PollWidget extends StatefulWidget {
+  const PollWidget({Key? key}) : super(key: key);
 
   @override
-  State<Poll> createState() => _PollState();
+  State<PollWidget> createState() => _PollWidgetState();
 }
 
-class _PollState extends State<Poll> {
+class _PollWidgetState extends State<PollWidget> {
   double option1 = 2.0;
   double option2 = 1.0;
   double option3 = 4.0;
