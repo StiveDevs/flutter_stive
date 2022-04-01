@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:stive/widgets/poll.dart';
 
-class PostWidget {
-  int id;
-  String title;
-  String subtitle;
-  Icon ic;
-  String description;
-  bool pollAvailable;
-  PostWidget(
+class Post {
+  String id, title, description, imageUrl;
+  DateTime postFrom, postTill;
+  List<Poll> polls = [];
+  Post(
       {required this.id,
       required this.title,
-      required this.subtitle,
-      required this.ic,
       required this.description,
-      required this.pollAvailable});
+      required this.imageUrl,
+      required this.postFrom,
+      required this.postTill,
+      required this.polls});
 }

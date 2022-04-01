@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stive/models/user.dart';
+import 'package:stive/models/student.dart';
 import 'package:stive/screens/settings.dart';
 import 'package:stive/screens/user_feed.dart';
 
@@ -7,7 +7,7 @@ import 'clubs.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.currUser}) : super(key: key);
-  final User currUser;
+  final Student currUser;
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -78,7 +78,7 @@ String titleSwitch(String screen) {
   }
 }
 
-Widget screenSwitch(String screen, User currUser) {
+Widget screenSwitch(String screen, Student currUser) {
   switch (screen) {
     case "User Feed":
       return UserFeed();

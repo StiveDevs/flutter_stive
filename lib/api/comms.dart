@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../models/user.dart';
+import '../models/student.dart';
 
 String ep = "https://stive-api.herokuapp.com/";
 
-Future<User?> userById(int id) async {
-  User? res;
+Future<Student?> userById(int id) async {
+  Student? res;
   await http.put(
     Uri.parse(ep + 'student/' + id.toString() + '/'),
     headers: <String, String>{
@@ -14,15 +14,15 @@ Future<User?> userById(int id) async {
     },
   ).then((dynamic response) {
     if (response.statusCode == 200) {
-      res = User.fromJSON(jsonDecode(response.body));
+      res = Student.fromJSON(jsonDecode(response.body));
     }
   });
 
   return res;
 }
 
-Future<List<User>?> userList() async {
-  List<User> res = [];
+Future<List<Student>?> userList() async {
+  List<Student> res = [];
   await http.put(
     Uri.parse(ep + 'student/'),
     headers: <String, String>{
@@ -37,15 +37,15 @@ Future<List<User>?> userList() async {
   return res;
 }
 
-List<User> convertToUserList(dynamic dict) {
-  List<User> fin = [];
+List<Student> convertToUserList(dynamic dict) {
+  List<Student> fin = [];
   for (dynamic i in dict) {
-    fin.add(User.fromJSON(i));
+    fin.add(Student.fromJSON(i));
   }
   return fin;
 }
 
-Future<String> createUser(User newUser) async {
+Future<String> createUser(Student newUser) async {
   String ret = "failed";
   await http
       .post(

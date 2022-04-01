@@ -18,9 +18,11 @@ class _UserFeedState extends State<UserFeed> {
           itemBuilder: (BuildContext ctx, int index) {
             return Card(
               child: ListTile(
-                leading: DUMMY_POST[index].ic,
-                title: Text(DUMMY_POST[index].title),
-                subtitle: Text(DUMMY_POST[index].subtitle),
+                leading: Icon(Icons.ac_unit),
+                title: Text(
+                  DUMMY_POST[index].title,
+                  style: TextStyle(color: Colors.black),
+                ),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -28,7 +30,7 @@ class _UserFeedState extends State<UserFeed> {
                       builder: (context) => PostDescription(
                         title: DUMMY_POST[index].title,
                         description: DUMMY_POST[index].description,
-                        pollAvailable: DUMMY_POST[index].pollAvailable,
+                        pollAvailable: false,
                       ),
                     ),
                   );

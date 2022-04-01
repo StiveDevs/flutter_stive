@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:stive/models/user.dart';
+import 'package:stive/models/student.dart';
 import 'package:stive/screens/home_screen.dart';
 
 class FlutterAuth extends StatefulWidget {
@@ -44,8 +44,12 @@ class _FlutterAuthState extends State<FlutterAuth> {
             context,
             MaterialPageRoute(
                 builder: (context) => HomeScreen(
-                      currUser: User(
-                          email: '', name: '', rollNo: 1, profilePicUrl: ''),
+                      currUser: Student(
+                        id: "007",
+                        email: '',
+                        name: '',
+                        rollNo: "1",
+                      ),
                     )),
           );
         },

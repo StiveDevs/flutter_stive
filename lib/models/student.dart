@@ -1,14 +1,19 @@
-class User {
-  int rollNo = 1;
-  String id = '',
-      name = "Def",
-      email = "def@example.com",
+class Student {
+  String id,
+      name,
+      rollNo,
+      email,
       profilePicUrl =
           "https://drive.google.com/uc?export=view&id=1edwpQvH_JURwGsArCc8NyPEe8EzdpzvQ";
 
-  User({rollNo, name, email, profilePicUrl});
+  Student({
+    required this.id,
+    required this.rollNo,
+    required this.name,
+    required this.email,
+  });
 
-  User.fromJSON(Map<String, dynamic> json)
+  Student.fromJSON(Map<String, dynamic> json)
       : id = json["id"],
         name = json["name"],
         rollNo = json["rollNo"],
@@ -16,8 +21,8 @@ class User {
         profilePicUrl = json["profilePicUrl"];
 
   Map<String, dynamic> toJson() => {
-        "id": id.toString(),
-        "rollNo": rollNo.toString(),
+        "id": id,
+        "rollNo": rollNo,
         "email": email,
         "profilePicUrl": profilePicUrl,
         "name": name

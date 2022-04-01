@@ -1,7 +1,8 @@
-import 'package:stive/models/user.dart';
+import 'package:stive/models/student.dart';
+import 'post.dart';
 
 class Club {
-  int id = 1;
-  String name = "Avant", description = "Hue", logoUrl = "";
-  List<User> coordinators = [], members = [];
+  String id = "1", name = "Avant", description = "Hue", logoUrl = "";
+  List<Student> coordinators = [], members = [];
+  List<Post> posts = [];
 }

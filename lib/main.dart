@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:stive/models/user.dart';
+import 'package:stive/models/student.dart';
 import 'package:stive/screens/auth.dart';
 import 'package:stive/api/comms.dart';
 
 void main() async {
-  User tp = User();
-  String res = await createUser(tp);
-  print(res);
-  //runApp(const MyApp());
+  // User tp = User();
+  // String res = await createUser(tp);
+  // print(res);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
