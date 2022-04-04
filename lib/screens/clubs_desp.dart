@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/models/student.dart';
+import 'package:stive/screens/create_add_post.dart';
 import 'package:stive/screens/post_desp.dart';
 
 class ClubsDescription extends StatefulWidget {
@@ -25,14 +26,26 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
         appBar: AppBar(
           title: Text(widget.name),
           actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.swap_horizontal_circle),
-                onPressed: () {
-                  setState(() {
-                    switch_content = !switch_content;
-                  });
-                }),
+            switch_content
+                ? IconButton(
+                    icon: const Icon(Icons.playlist_add_circle_sharp),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CreateAddPost()),
+                      );
+                    })
+                : Container(),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              switch_content = !switch_content;
+            });
+          },
+          child: const Icon(Icons.swap_horizontal_circle),
         ),
         body: Center(
           child: switch_content
