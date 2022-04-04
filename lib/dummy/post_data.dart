@@ -13,7 +13,7 @@ var DUMMY_POST = [
         'The contest saw a great participation and the top three with highest score are : 1. Alex 2.George 3. Samuel. Congratulations to all the winners',
   ),
   Post(
-    id: "1",
+    id: "2",
     imageUrl: "",
     postFrom: DateTime(2001, 3, 2, 1),
     postTill: DateTime(2002, 3, 2, 1),
@@ -23,7 +23,7 @@ var DUMMY_POST = [
         'The contest saw a great participation and the top three with highest score are : 1. Alex 2.George 3. Samuel. Congratulations to all the winners',
   ),
   Post(
-    id: "1",
+    id: "3",
     imageUrl: "",
     postFrom: DateTime(2001, 3, 2, 1),
     postTill: DateTime(2002, 3, 2, 1),
@@ -33,7 +33,7 @@ var DUMMY_POST = [
         'The contest saw a great participation and the top three with highest score are : 1. Alex 2.George 3. Samuel. Congratulations to all the winners',
   ),
   Post(
-    id: "1",
+    id: "4",
     imageUrl: "",
     postFrom: DateTime(2001, 3, 2, 1),
     postTill: DateTime(2002, 3, 2, 1),
@@ -43,7 +43,7 @@ var DUMMY_POST = [
         'The contest saw a great participation and the top three with highest score are : 1. Alex 2.George 3. Samuel. Congratulations to all the winners',
   ),
   Post(
-    id: "1",
+    id: "5",
     imageUrl: "",
     postFrom: DateTime(2001, 3, 2, 1),
     postTill: DateTime(2002, 3, 2, 1),

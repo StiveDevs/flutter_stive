@@ -18,19 +18,21 @@ class PostDescription extends StatelessWidget {
           title,
         ),
       ),
-      body: Column(
-        children: [
-          Text(
-            description,
-            style: TextStyle(color: Colors.white),
-          ),
-          pollAvailable
-              ? PollWidget()
-              : const Text(
-                  'No Poll Available',
-                  style: TextStyle(color: Colors.white),
-                ),
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              description,
+              style: TextStyle(color: Colors.white),
+            ),
+            pollAvailable
+                ? PollWidget()
+                : const Text(
+                    'No Poll Available',
+                    style: TextStyle(color: Colors.white),
+                  ),
+          ],
+        ),
       ),
     );
   }
