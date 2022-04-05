@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:stive/api/clubCalls.dart';
+import 'package:stive/models/club.dart';
+import 'package:stive/models/option.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/auth.dart';
+
 import 'package:stive/api/studentCalls.dart';
+import 'package:stive/api/optionsCalls.dart';
 
 void main() async {
-  // User tp = User();
-  // String res = await createUser(tp);
-  // print(res);
-  runApp(const MyApp());
+  List<Club>? res = await clubList();
+  print(res);
+  //runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

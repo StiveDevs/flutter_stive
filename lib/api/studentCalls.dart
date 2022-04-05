@@ -3,43 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:stive/constants/creds.dart';
 import '../models/student.dart';
 
-Future<bool> deleteStudentById(int id) async {
-  bool res = false;
-  await http.put(
-    Uri.parse(ep + 'student/' + id.toString() + '/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  ).then((dynamic response) {
-    if (response.statusCode == 204 &&
-        jsonDecode(response.body)["acknowledged"]) {
-      res = true;
-    }
-  });
-
-  return res;
-}
-
-Future<Student?> studentById(int id) async {
-  Student? res;
-  await http.put(
-    Uri.parse(ep + 'student/' + id.toString() + '/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  ).then((dynamic response) {
-    if (response.statusCode == 200) {
-      res = Student.fromJSON(jsonDecode(response.body));
-    }
-  });
-
-  return res;
-}
+String tp = ep + 'student/';
 
 Future<List<Student>?> studentList() async {
   List<Student> res = [];
-  await http.put(
-    Uri.parse(ep + 'student/'),
+  await http.get(
+    Uri.parse(tp),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -64,7 +33,7 @@ Future<bool> createStudent(Student newUser) async {
   bool res = false;
   await http
       .post(
-    Uri.parse(ep + 'student/'),
+    Uri.parse(tp),
     headers: <String, String>{
       'Content-Type': 'application/json',
     },
@@ -72,10 +41,46 @@ Future<bool> createStudent(Student newUser) async {
   )
       .then((dynamic response) {
     var resp = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      newUser.id = resp["insertedId"];
+    if (response.statusCode == 201) {
+      newUser.id = resp["upsertedId"];
       res = true;
     }
   });
+  return res;
+}
+
+Future<Student?> studentById(String id) async {
+  Student? res;
+  await http.get(
+    Uri.parse(tp + id + '/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  ).then((dynamic response) {
+    if (response.statusCode == 200) {
+      res = Student.fromJSON(jsonDecode(response.body));
+    }
+  });
+
+  return res;
+}
+
+Future<bool> deleteStudentById(String id) async {
+  bool res = false;
+  await http
+      .delete(
+    Uri.parse(tp + id + '/'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({}),
+  )
+      .then((dynamic response) {
+    if (response.statusCode == 204 &&
+        jsonDecode(response.body)["acknowledged"]) {
+      res = true;
+    }
+  });
+
   return res;
 }

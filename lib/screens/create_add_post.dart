@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stive/dummy/post_data.dart';
-import 'package:stive/models/poll.dart';
+import 'package:stive/models/pollModel.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/widgets/poll.dart';
 

@@ -11,10 +11,10 @@ class Student {
 
   Student.fromJSON(Map<String, dynamic> json)
       : id = json["_id"],
-        name = json["name"],
-        rollNo = json["rollNo"],
-        email = json["email"],
-        profilePicUrl = json["profilePicUrl"];
+        name = json["name"] ?? "",
+        rollNo = json["rollNo"] ?? "",
+        email = json["email"] ?? "",
+        profilePicUrl = json["profilePicUrl"] ?? "";
 
   Map<String, dynamic> toJson() => {
         "_id": id,
