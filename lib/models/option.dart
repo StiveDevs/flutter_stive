@@ -4,5 +4,5 @@ class Option {
   String id, name;
   List<Student> selectedBy;
 
-  Option({required this.id, required this.name, required this.selectedBy});
+  Option({required this.name, required this.selectedBy, this.id = ""});
 }

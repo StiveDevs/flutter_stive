@@ -6,12 +6,16 @@ class Club {
   List<Student> coordinators, members;
   List<Post> posts;
   Club(
-      {required this.id,
-      required this.name,
+      {required this.name,
       required this.description,
       required this.coordinators,
       required this.members,
       required this.posts,
       this.logoUrl =
-          "https://drive.google.com/uc?export=view&id=1edwpQvH_JURwGsArCc8NyPEe8EzdpzvQ"});
+          "https://drive.google.com/uc?export=view&id=1edwpQvH_JURwGsArCc8NyPEe8EzdpzvQ",
+      this.id = ""});
+
+  Map<String, dynamic> toJson() => {
+    
+  };
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/auth.dart';
-import 'package:stive/api/comms.dart';
+import 'package:stive/api/studentCalls.dart';
 
 void main() async {
   // User tp = User();

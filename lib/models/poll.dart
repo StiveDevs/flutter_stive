@@ -4,8 +4,8 @@ class PollModel {
   String id, name, maxOptionsPerStudent;
   List<Option> options;
   PollModel(
-      {required this.id,
-      required this.name,
+      {required this.name,
       required this.maxOptionsPerStudent,
-      required this.options});
+      required this.options,
+      this.id = ""});
 }
