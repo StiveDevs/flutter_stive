@@ -25,27 +25,36 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.name),
-          actions: <Widget>[
+        ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: "h1",
+              onPressed: () {
+                setState(() {
+                  switch_content = !switch_content;
+                });
+              },
+              child: const Icon(Icons.swap_horizontal_circle),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
             switch_content
-                ? IconButton(
-                    icon: const Icon(Icons.playlist_add_circle_sharp),
+                ? FloatingActionButton(
+                    heroTag: "h2",
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => CreateAddPost()),
                       );
-                    })
-                : Container(),
+                    },
+                    child: const Icon(Icons.playlist_add_circle_sharp),
+                  )
+                : SizedBox.shrink()
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              switch_content = !switch_content;
-            });
-          },
-          child: const Icon(Icons.swap_horizontal_circle),
         ),
         body: Center(
           child: switch_content

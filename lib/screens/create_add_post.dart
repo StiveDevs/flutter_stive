@@ -31,9 +31,6 @@ class _CreateAddPostState extends State<CreateAddPost> {
         postFrom: DateTime.now(),
         postTill: DateTime.now(),
         polls: []));
-    print(title);
-    print(description);
-    print(imageUrl);
     Navigator.of(context).pop();
   }
 
