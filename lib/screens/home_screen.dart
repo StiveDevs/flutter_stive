@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/settings.dart';
 import 'package:stive/screens/user_feed.dart';
+import 'package:stive/widgets/create_club.dart';
 
 import 'clubs.dart';
 
@@ -26,6 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: Text(titleSwitch(screen)),
         ),
+        floatingActionButton: titleSwitch(screen) == "Clubs"
+            ? FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CreateClub()),
+                  );
+                },
+                child: const Icon(Icons.add))
+            : const SizedBox.shrink(),
         body: screenSwitch(screen, widget.currUser),
         drawer: Drawer(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,

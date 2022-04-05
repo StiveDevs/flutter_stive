@@ -12,11 +12,8 @@ class CreateAddPost extends StatefulWidget {
 }
 
 class _CreateAddPostState extends State<CreateAddPost> {
-  String? title;
-  String? description;
-  String? imageUrl;
+  String? title, description, imageUrl;
   PollWidget? poll;
-  FocusNode myFocusNode = new FocusNode();
   final _form = GlobalKey<FormState>();
   void _saveForm() {
     final isValid = _form.currentState!.validate();
@@ -53,6 +50,7 @@ class _CreateAddPostState extends State<CreateAddPost> {
       style: const TextStyle(color: Colors.white),
       decoration: const InputDecoration(
           labelText: 'Description', labelStyle: TextStyle(color: Colors.white)),
+      maxLines: 3,
       validator: (String? value) {
         if (value!.isEmpty) return 'Description is required';
       },
@@ -89,7 +87,13 @@ class _CreateAddPostState extends State<CreateAddPost> {
               child: Column(
                 children: [
                   buildTitle(),
+                  const SizedBox(
+                    height: 35,
+                  ),
                   buildDescription(),
+                  const SizedBox(
+                    height: 35,
+                  ),
                   buildImage(),
                   //buildPoll(),
                 ],
