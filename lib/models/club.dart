@@ -19,9 +19,9 @@ class Club {
 
   Club.fromJSON(Map<String, dynamic> json)
       : id = json["_id"] ?? "",
-        name = json["name"],
-        description = json["description"],
-        logoUrl = json["logoUrl"],
+        name = json["name"] ?? "",
+        description = json["description"] ?? "",
+        logoUrl = json["logoUrl"] ?? "",
         coordinators = convertToStudentList(json["coordinators"] ?? []),
         members = convertToStudentList(json["members"] ?? []),
         posts = convertToPostList(json["posts"] ?? []);

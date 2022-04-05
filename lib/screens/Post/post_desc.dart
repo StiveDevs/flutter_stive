@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:stive/models/post.dart';
+import 'package:stive/models/student.dart';
 import 'package:stive/widgets/poll.dart';
 
 class PostDescription extends StatelessWidget {
-  String title;
-  String description;
-  bool pollAvailable;
-  PostDescription(
-      {required this.title,
-      required this.description,
-      required this.pollAvailable});
+  Post selected;
+  Student curr;
+  PostDescription({Key? key, required this.selected, required this.curr})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          title,
+          selected.title,
         ),
       ),
       body: Center(
         child: Column(
           children: [
             Text(
-              description,
+              selected.description,
               style: TextStyle(color: Colors.white),
             ),
-            pollAvailable
+            selected.polls.isNotEmpty
                 ? PollWidget()
                 : const Text(
                     'No Poll Available',

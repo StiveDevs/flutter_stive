@@ -52,7 +52,7 @@ Future<bool> createStudent(Student newUser) async {
 Future<Student?> studentById(String id) async {
   Student? res;
   await http.get(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -69,7 +69,7 @@ Future<bool> deleteStudentById(String id) async {
   bool res = false;
   await http
       .delete(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

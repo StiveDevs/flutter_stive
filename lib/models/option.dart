@@ -8,7 +8,7 @@ class Option {
   Option({required this.name, required this.selectedBy, this.id = ""});
 
   Option.fromJSON(Map<String, dynamic> json)
-      : id = json["_id"],
+      : id = json["_id"] ?? "",
         name = json["name"] ?? "",
         selectedBy = convertToStudentList(json["selectedBy"] ?? []);
 

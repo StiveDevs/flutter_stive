@@ -50,7 +50,7 @@ Future<bool> createPost(Post newPost) async {
 Future<Post?> postById(String id) async {
   Post? res;
   await http.get(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -66,7 +66,7 @@ Future<Post?> postById(String id) async {
 Future<bool> deletePostById(String id) async {
   bool res = false;
   await http.delete(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

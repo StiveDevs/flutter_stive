@@ -50,7 +50,7 @@ Future<bool> createPoll(PollModel newPoll) async {
 Future<PollModel?> pollById(String id) async {
   PollModel? res;
   await http.get(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -66,7 +66,7 @@ Future<PollModel?> pollById(String id) async {
 Future<bool> deletePollById(String id) async {
   bool res = false;
   await http.delete(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

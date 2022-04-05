@@ -16,7 +16,7 @@ class Post {
       this.id = ""});
 
   Post.fromJSON(Map<String, dynamic> json)
-      : id = json["_id"],
+      : id = json["_id"] ?? "",
         title = json["title"] ?? "",
         description = json["description"] ?? "",
         imageUrl = json["imageUrl"] ?? "",

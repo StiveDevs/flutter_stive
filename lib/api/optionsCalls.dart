@@ -50,7 +50,7 @@ Future<bool> createOption(Option newOption) async {
 Future<Option?> optionById(String id) async {
   Option? res;
   await http.get(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -66,7 +66,7 @@ Future<Option?> optionById(String id) async {
 Future<bool> deleteOptionById(String id) async {
   bool res = false;
   await http.delete(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:stive/api/studentCalls.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/home_screen.dart';
 
@@ -13,6 +14,7 @@ class FlutterAuth extends StatefulWidget {
 class _FlutterAuthState extends State<FlutterAuth> {
   @override
   Widget build(BuildContext context) {
+    Student? authenticated;
     return WillPopScope(
       onWillPop: () async {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -38,18 +40,17 @@ class _FlutterAuthState extends State<FlutterAuth> {
         onSignup: (dat) async {
           return "nub";
         },
-        onLogin: (_loginData) async {},
+        onLogin: (_loginData) async {
+          authenticated = await studentById("6236cdccc25442cd1eff531d");
+          if (authenticated == null) return "bhup";
+          authenticated!.id = "6236cdccc25442cd1eff531d";
+        },
         onSubmitAnimationCompleted: () {
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => HomeScreen(
-                      currUser: Student(
-                        id: "007",
-                        email: '',
-                        name: '',
-                        rollNo: "1",
-                      ),
+                      currUser: authenticated!,
                     )),
           );
         },

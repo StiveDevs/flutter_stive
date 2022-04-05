@@ -4,17 +4,17 @@ import 'package:stive/screens/settings.dart';
 import 'package:stive/screens/user_feed.dart';
 import 'package:stive/widgets/create_club.dart';
 
-import 'clubs.dart';
+import 'Club/clubs.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.currUser}) : super(key: key);
-  final Student currUser;
+  HomeScreen({Key? key, required this.currUser}) : super(key: key);
+  Student currUser;
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String screen = "User Feed";
+  String screen = "Feed";
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: ListView(
             children: [
-              drawerTile("User Feed", Icons.list),
-              drawerTile("Clubs", Icons.list),
-              drawerTile("Settings", Icons.list),
+              drawerTile("Feed", Icons.list),
+              drawerTile("Clubs", Icons.home),
+              drawerTile("Settings", Icons.settings),
             ],
           ),
         ),
@@ -78,8 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
 String titleSwitch(String screen) {
   switch (screen) {
-    case "User Feed":
-      return "User Feed";
+    case "Feed":
+      return "Feed";
     case "Clubs":
       return "Clubs";
     case "Settings":
@@ -91,10 +91,14 @@ String titleSwitch(String screen) {
 
 Widget screenSwitch(String screen, Student currUser) {
   switch (screen) {
-    case "User Feed":
-      return UserFeed();
+    case "Feed":
+      return UserFeed(
+        curr: currUser,
+      );
     case "Clubs":
-      return Clubs();
+      return Clubs(
+        curr: currUser,
+      );
     case "Settings":
       return Settings();
     default:

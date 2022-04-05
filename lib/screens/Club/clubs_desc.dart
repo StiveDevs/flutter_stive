@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:stive/models/post.dart';
+import 'package:stive/models/club.dart';
 import 'package:stive/models/student.dart';
-import 'package:stive/screens/create_add_post.dart';
-import 'package:stive/screens/post_desp.dart';
+import 'package:stive/screens/Post/create_add_post.dart';
+import 'package:stive/screens/Post/post_desc.dart';
+import 'package:stive/screens/Post/post_tile.dart';
 
 class ClubsDescription extends StatefulWidget {
-  String name, description;
-  List<Student> coordinators;
-  List<Post> posts;
-  ClubsDescription(
-      {required this.name,
-      required this.description,
-      required this.coordinators,
-      required this.posts});
+  Club selected;
+  Student curr;
+  ClubsDescription({Key? key, required this.selected, required this.curr})
+      : super(key: key);
 
   @override
   State<ClubsDescription> createState() => _ClubsDescriptionState();
@@ -24,7 +21,7 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.name),
+          title: Text(widget.selected.name),
         ),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -59,34 +56,16 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
         body: Center(
           child: switch_content
               ? ListView.builder(
-                  itemCount: widget.posts.length,
+                  itemCount: widget.selected.posts.length,
                   itemBuilder: (BuildContext ctx, int index) {
-                    return Card(
-                      child: ListTile(
-                        leading: Icon(Icons.ac_unit),
-                        title: Text(
-                          widget.posts[index].title,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PostDescription(
-                                title: widget.posts[index].title,
-                                description: widget.posts[index].description,
-                                pollAvailable: false,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
+                    return PostTile(
+                        curr: widget.curr,
+                        selected: widget.selected.posts[index]);
                   })
               : Column(children: [
                   const Padding(padding: EdgeInsets.all(20)),
                   Text(
-                    widget.description,
+                    widget.selected.description,
                     style: const TextStyle(color: Colors.white),
                   )
                 ]),

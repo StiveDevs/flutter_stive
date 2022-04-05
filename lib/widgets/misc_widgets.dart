@@ -42,3 +42,17 @@ class ErrorDisplay extends StatelessWidget {
     );
   }
 }
+
+void errorSnackBar(String message, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(message),
+    backgroundColor: Theme.of(context).errorColor,
+  ));
+}
+
+void infoSnackBar(String message, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(message),
+    backgroundColor: Theme.of(context).colorScheme.secondary,
+  ));
+}

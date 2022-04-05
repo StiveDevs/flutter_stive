@@ -13,7 +13,7 @@ class PollModel {
       this.id = ""});
 
   PollModel.fromJSON(Map<String, dynamic> json)
-      : id = json["_id"],
+      : id = json["_id"] ?? "",
         name = json["name"] ?? "",
         maxOptionsPerStudent = json["maxOptionsPerStudent"] ?? 1,
         options = convertToOptionList(json["options"] ?? []);

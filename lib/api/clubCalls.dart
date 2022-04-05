@@ -50,7 +50,7 @@ Future<bool> createClub(Club newClub) async {
 Future<Club?> clubById(String id) async {
   Club? res;
   await http.get(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -66,7 +66,7 @@ Future<Club?> clubById(String id) async {
 Future<bool> deleteClubById(String id) async {
   bool res = false;
   await http.delete(
-    Uri.parse(tp + id + '/'),
+    Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

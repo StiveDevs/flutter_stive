@@ -10,7 +10,7 @@ class Student {
       this.id = ""});
 
   Student.fromJSON(Map<String, dynamic> json)
-      : id = json["_id"],
+      : id = json["_id"] ?? "",
         name = json["name"] ?? "",
         rollNo = json["rollNo"] ?? "",
         email = json["email"] ?? "",
