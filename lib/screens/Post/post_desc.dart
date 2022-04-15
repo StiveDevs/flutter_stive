@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/models/student.dart';
+import 'package:stive/screens/Poll/add_poll.dart';
 import 'package:stive/widgets/poll.dart';
 
 class PostDescription extends StatelessWidget {
@@ -12,6 +13,16 @@ class PostDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PollAdd(selected: selected)),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Text(
           selected.title,
@@ -25,11 +36,8 @@ class PostDescription extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             selected.polls.isNotEmpty
-                ? PollWidget()
-                : const Text(
-                    'No Poll Available',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                ? PollWidget(poll: selected.polls[0])
+                : const SizedBox.shrink()
           ],
         ),
       ),
