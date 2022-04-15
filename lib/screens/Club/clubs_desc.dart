@@ -45,12 +45,13 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CreateAddPost()),
+                            builder: (context) =>
+                                CreateAddPost(clubId: widget.selected.id)),
                       );
                     },
                     child: const Icon(Icons.playlist_add_circle_sharp),
                   )
-                : SizedBox.shrink()
+                : const SizedBox.shrink()
           ],
         ),
         body: Center(

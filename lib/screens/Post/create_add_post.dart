@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:stive/api/clubCalls.dart';
+import 'package:stive/api/postCalls.dart';
 import 'package:stive/dummy/post_data.dart';
 import 'package:stive/models/pollModel.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/widgets/poll.dart';
 
 class CreateAddPost extends StatefulWidget {
-  const CreateAddPost({Key? key}) : super(key: key);
+  String clubId;
+  CreateAddPost({required this.clubId});
 
   @override
   State<CreateAddPost> createState() => _CreateAddPostState();
@@ -15,12 +18,22 @@ class _CreateAddPostState extends State<CreateAddPost> {
   String? title, description, imageUrl;
   PollWidget? poll;
   final _form = GlobalKey<FormState>();
-  void _saveForm() {
+  void _saveForm() async {
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
     }
     _form.currentState!.save();
+    Post newPost = Post(
+      title: title!,
+      description: description!,
+      postFrom: DateTime.now(),
+      postTill: DateTime.now(),
+      polls: [],
+    );
+    //bool res = await createPost(newPost);
+    // print("New Post Created!!!");
+    //if (res) addPostToClub(widget.clubId, newPost.id);
     DUMMY_POST.add(Post(
         id: "id",
         title: title!,
@@ -95,6 +108,9 @@ class _CreateAddPostState extends State<CreateAddPost> {
                     height: 35,
                   ),
                   buildImage(),
+                  const SizedBox(
+                    height: 35,
+                  ),
                   //buildPoll(),
                 ],
               ))),
