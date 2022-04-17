@@ -26,8 +26,6 @@ class _FlutterAuthState extends State<FlutterAuth> {
       },
       child: FlutterLogin(
         title: "Stive",
-        savedEmail: "ishan@gmail.com",
-        savedPassword: "nigganiga",
         theme: LoginTheme(
           primaryColor: Theme.of(context).primaryColor,
           accentColor: Theme.of(context).colorScheme.secondary,
