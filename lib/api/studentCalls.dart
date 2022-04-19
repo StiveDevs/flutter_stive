@@ -30,7 +30,6 @@ List<Student> convertToStudentList(dynamic dict) {
 }
 
 Future<bool> createStudent(Student newUser) async {
-  print(newUser.toJson());
   bool res = false;
   await http
       .post(

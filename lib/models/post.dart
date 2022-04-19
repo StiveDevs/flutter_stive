@@ -1,5 +1,6 @@
 import 'package:stive/models/pollModel.dart';
 import 'package:stive/api/pollCalls.dart';
+import 'package:intl/intl.dart';
 
 class Post {
   String id, title, description, imageUrl;
@@ -32,8 +33,9 @@ class Post {
         "title": title,
         "description": description,
         "imageUrl": imageUrl,
-        "postFrom": postFrom,
-        "PostTill": postTill,
+        "postFrom": DateFormat.yMEd().add_jms().format(postFrom),
+        "PostTill": DateFormat.yMEd().add_jms().format(postTill),
+        //"PostTill": DateFormat('yyyy-MM-dd-kk:mm').format(postTill),
         "polls": []
       };
 }

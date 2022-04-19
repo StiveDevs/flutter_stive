@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stive/api/clubCalls.dart';
+import 'package:stive/api/postCalls.dart';
+import 'package:stive/constants/misc.dart';
 import 'package:stive/dummy/post_data.dart';
 import 'package:stive/models/post.dart';
+import 'package:stive/widgets/misc_widgets.dart';
 import 'package:stive/widgets/poll.dart';
 
 // ignore: must_be_immutable
@@ -13,7 +17,7 @@ class CreateAddPost extends StatefulWidget {
 }
 
 class _CreateAddPostState extends State<CreateAddPost> {
-  String? title, description, imageUrl;
+  String title = "", description = "", imageUrl = "";
   PollWidget? poll;
   final _form = GlobalKey<FormState>();
   void _saveForm() async {
@@ -23,35 +27,35 @@ class _CreateAddPostState extends State<CreateAddPost> {
     }
     _form.currentState!.save();
     Post newPost = Post(
-      title: title!,
-      description: description!,
+      title: title,
+      description: description,
       postFrom: DateTime.now(),
       postTill: DateTime.now(),
       polls: [],
     );
-    //bool res = await createPost(newPost);
-    // print("New Post Created!!!");
-    //if (res) addPostToClub(widget.clubId, newPost.id);
-    DUMMY_POST.add(Post(
-        id: "id",
-        title: title!,
-        description: description!,
-        postFrom: DateTime.now(),
-        postTill: DateTime.now(),
-        polls: []));
-    Navigator.of(context).pop();
+    bool res = await createPost(newPost);
+    if (res) {
+      res = await addPostToClub(widget.clubId, newPost.id);
+      if (res) {
+        Navigator.of(context).pop();
+        infoSnackBar("Created post", context);
+      }
+    }
+    if (!res) {
+      errorSnackBar("Error creating post", context);
+    }
   }
 
   Widget buildTitle() {
     return TextFormField(
       style: const TextStyle(color: Colors.white),
-      decoration: const InputDecoration(
-          labelText: 'Title', labelStyle: TextStyle(color: Colors.white)),
+      decoration: textInputDecoration.copyWith(
+          label: const Text("Title"), hintText: ""),
       validator: (String? value) {
-        if (value!.isEmpty) return 'Title is required';
+        if (value == null || value.isEmpty) return 'Title is required';
       },
       onSaved: (String? value) {
-        title = value;
+        title = value ?? "";
       },
     );
   }
@@ -59,14 +63,14 @@ class _CreateAddPostState extends State<CreateAddPost> {
   Widget buildDescription() {
     return TextFormField(
       style: const TextStyle(color: Colors.white),
-      decoration: const InputDecoration(
-          labelText: 'Description', labelStyle: TextStyle(color: Colors.white)),
+      decoration: textInputDecoration.copyWith(
+          label: const Text("Description"), hintText: ""),
       maxLines: 3,
       validator: (String? value) {
-        if (value!.isEmpty) return 'Description is required';
+        if (value == null || value.isEmpty) return 'Description is required';
       },
       onSaved: (String? value) {
-        description = value;
+        title = value ?? "";
       },
     );
   }
@@ -74,13 +78,16 @@ class _CreateAddPostState extends State<CreateAddPost> {
   Widget buildImage() {
     return TextFormField(
       style: const TextStyle(color: Colors.white),
-      decoration: const InputDecoration(
-          labelText: 'Image Url', labelStyle: TextStyle(color: Colors.white)),
+      decoration: textInputDecoration.copyWith(
+          label: const Text(
+            "Image Url",
+          ),
+          hintText: ""),
       validator: (String? value) {
-        if (value!.isEmpty) return 'Url is required';
+        if (value == null || value.isEmpty) return 'Url is required';
       },
       onSaved: (String? value) {
-        imageUrl = value;
+        imageUrl = value ?? "";
       },
     );
   }

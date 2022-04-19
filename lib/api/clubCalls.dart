@@ -16,7 +16,6 @@ Future<List<Club>?> clubList() async {
       res = convertToClubList(jsonDecode(response.body));
     }
   });
-
   return res;
 }
 
@@ -132,6 +131,7 @@ Future<bool> addPostToClub(String club, String post) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
+    print(response.body);
     if (response.statusCode == 200 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;

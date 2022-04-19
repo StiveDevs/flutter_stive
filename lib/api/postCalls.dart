@@ -39,6 +39,7 @@ Future<bool> createPost(Post newPost) async {
     body: jsonEncode(newPost.toJson()),
   )
       .then((dynamic response) {
+    print(response.body);
     if (response.statusCode == 200) {
       newPost.id = jsonDecode(response.body)["insertedId"];
       res = true;

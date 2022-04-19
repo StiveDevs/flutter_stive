@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stive/api/clubCalls.dart';
+import 'package:stive/constants/misc.dart';
 import 'package:stive/models/club.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/models/student.dart';
@@ -18,14 +19,14 @@ class UserFeed extends StatefulWidget {
 class _UserFeedState extends State<UserFeed> {
   @override
   Widget build(BuildContext context) {
-    Future<List<Post>?> gamesList = filterFeed();
+    Future<List<Post>?> postList = filterFeed();
     return Column(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Flexible(
           child: FutureBuilder(
-            future: gamesList,
+            future: postList,
             builder:
                 (BuildContext context, AsyncSnapshot<List<Post>?> snapshot) {
               if (snapshot.hasData) {
@@ -62,11 +63,9 @@ class _UserFeedState extends State<UserFeed> {
     }
     List<Post> res = [];
     for (Club i in raw) {
-      for (Student s in i.members) {
-        if (s.id == widget.curr.id) {
-          res.addAll(i.posts);
-          continue;
-        }
+      if (studentInList(widget.curr.email, i.members) != null) {
+        res.addAll(i.posts);
+        continue;
       }
     }
     return res;

@@ -58,9 +58,16 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                     res = await addMemberToClub(widget.selected.id.toString(),
                         widget.curr.id.toString());
                   }
+                  if (res) {
+                    if (widget.curr.member) {
+                      widget.selected.members.remove(widget.curr);
+                    } else {
+                      widget.selected.members.add(widget.curr);
+                    }
+                    widget.curr.member = !widget.curr.member;
+                  }
                   setState(() {
                     if (res) {
-                      widget.curr.member = !widget.curr.member;
                       infoSnackBar("Success", context);
                     } else {
                       errorSnackBar("Failed", context);
@@ -122,7 +129,7 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                               image: NetworkImage(widget
                                   .selected.coordinators[index].profilePicUrl)),
                           title: Text(widget.selected.coordinators[index].name,
-                              style: TextStyle(color: Colors.white)),
+                              style: const TextStyle(color: Colors.white)),
                         );
                       }),
                   const Text(
@@ -138,7 +145,30 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                               image: NetworkImage(widget
                                   .selected.members[index].profilePicUrl)),
                           title: Text(widget.selected.members[index].name,
-                              style: TextStyle(color: Colors.white)),
+                              style: const TextStyle(color: Colors.white)),
+                          trailing: widget.curr.coordinator
+                              ? IconButton(
+                                  icon: const Icon(
+                                    Icons.remove,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () async {
+                                    bool res = await removeMemberFromClub(
+                                        widget.selected.id,
+                                        widget.selected.members[index].id);
+                                    if (res) {
+                                      widget.selected.members.remove(
+                                          widget.selected.members[index]);
+                                      setState(() {
+                                        infoSnackBar("Removed Member", context);
+                                      });
+                                    } else {
+                                      errorSnackBar(
+                                          "Error removing member", context);
+                                    }
+                                  },
+                                )
+                              : const SizedBox(),
                         );
                       }),
                 ],
