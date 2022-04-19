@@ -30,6 +30,7 @@ List<Student> convertToStudentList(dynamic dict) {
 }
 
 Future<bool> createStudent(Student newUser) async {
+  print(newUser.toJson());
   bool res = false;
   await http
       .post(
@@ -40,8 +41,9 @@ Future<bool> createStudent(Student newUser) async {
     body: jsonEncode(newUser.toJson()),
   )
       .then((dynamic response) {
+    print(response.body);
     var resp = jsonDecode(response.body);
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       newUser.id = resp["upsertedId"];
       res = true;
     }

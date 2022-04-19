@@ -2,6 +2,7 @@ import 'package:polls/polls.dart';
 import 'package:flutter/material.dart';
 import 'package:stive/models/option.dart';
 import 'package:stive/models/pollModel.dart';
+import 'package:stive/models/student.dart';
 
 class PollWidget extends StatefulWidget {
   PollModel poll;
@@ -21,10 +22,12 @@ class _PollWidgetState extends State<PollWidget> {
   //   'kent@gmail.com': 2,
   //   'xyz@gmail.com': 3
   // };
+  
   String creator = "admin@gmail.com";
   @override
   Widget build(BuildContext context) {
-    return Polls(
+    return Container();
+    /*return Polls(
       children: [
         // This cannot be less than 2, else will throw an exception
         for (Option option in optionList!)
@@ -69,6 +72,6 @@ class _PollWidgetState extends State<PollWidget> {
           });
         }
       },
-    );
+    );*/
   }
 }

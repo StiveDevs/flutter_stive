@@ -65,12 +65,15 @@ Future<Club?> clubById(String id) async {
 
 Future<bool> deleteClubById(String id) async {
   bool res = false;
-  await http.delete(
+  await http
+      .delete(
     Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-  ).then((dynamic response) {
+    body: jsonEncode({}),
+  )
+      .then((dynamic response) {
     if (response.statusCode == 204 &&
         jsonDecode(response.body)["acknowledged"]) {
       res = true;

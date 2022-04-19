@@ -26,8 +26,8 @@ class _FlutterAuthState extends State<FlutterAuth> {
       },
       child: FlutterLogin(
         title: "Stive",
-        savedEmail: "ishan@gmail.com",
-        savedPassword: "nigganiga",
+        savedEmail: "ishan.acharyya@iiitg.ac.in",
+        savedPassword: "onzy bonzy",
         theme: LoginTheme(
           primaryColor: Theme.of(context).primaryColor,
           accentColor: Theme.of(context).colorScheme.secondary,
@@ -38,12 +38,26 @@ class _FlutterAuthState extends State<FlutterAuth> {
           ),
         ),
         onSignup: (dat) async {
-          return "nub";
+          String? val = dat.name;
+          if (val == null || val.isEmpty || val.split("@").length != 1) {
+            return "Invalid Email";
+          }
+          if (val.split("@")[1] != "iiitg.ac.in") {
+            return "iiitg.ac.in domain is required";
+          }
+
+          authenticated = Student(
+              rollNo: dat.additionalSignupData!["rn"]!,
+              name: dat.additionalSignupData!["name"]!,
+              email: dat.name!);
+          bool res = await createStudent(authenticated!);
+          if (!res) {
+            return "bhup";
+          }
         },
         onLogin: (_loginData) async {
-          authenticated = await studentById("6236cdccc25442cd1eff531d");
+          authenticated = await checkUser(_loginData.name);
           if (authenticated == null) return "bhup";
-          authenticated!.id = "6236cdccc25442cd1eff531d";
         },
         onSubmitAnimationCompleted: () {
           Navigator.push(
@@ -57,14 +71,35 @@ class _FlutterAuthState extends State<FlutterAuth> {
         additionalSignupFields: [
           UserFormField(
             keyName: "name",
-            displayName: "name",
+            displayName: "Name",
             fieldValidator: (val) =>
                 val!.isEmpty ? 'Enter a non-empty name' : null,
+          ),
+          UserFormField(
+            keyName: "rn",
+            displayName: "Roll Numer",
+            fieldValidator: (val) =>
+                val!.isEmpty ? 'Enter your roll number' : null,
           ),
         ],
         onRecoverPassword: (dat) => "Recovery" as Future<String>,
         hideForgotPasswordButton: true,
       ),
     );
+  }
+
+  Future<Student?> checkUser(String email) async {
+    Student? req;
+    List<Student>? l = await studentList();
+    if (l != null) {
+      for (Student s in l) {
+        if (s.email == email) {
+          req = s;
+          break;
+        }
+      }
+    }
+
+    return req;
   }
 }

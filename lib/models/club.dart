@@ -21,7 +21,8 @@ class Club {
       : id = json["_id"] ?? "",
         name = json["name"] ?? "",
         description = json["description"] ?? "",
-        logoUrl = json["logoUrl"] ?? "",
+        logoUrl = json["logoUrl"] ??
+            "https://drive.google.com/uc?export=view&id=1edwpQvH_JURwGsArCc8NyPEe8EzdpzvQ",
         coordinators = convertToStudentList(json["coordinators"] ?? []),
         members = convertToStudentList(json["members"] ?? []),
         posts = convertToPostList(json["posts"] ?? []);
