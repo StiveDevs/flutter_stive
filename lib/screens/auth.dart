@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:stive/api/studentCalls.dart';
+import 'package:stive/constants/misc.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/home_screen.dart';
 
@@ -52,12 +53,14 @@ class _FlutterAuthState extends State<FlutterAuth> {
               email: dat.name!);
           bool res = await createStudent(authenticated!);
           if (!res) {
-            return "bhup";
+            return "SignUp failed";
           }
         },
         onLogin: (_loginData) async {
-          authenticated = await checkUser(_loginData.name);
-          if (authenticated == null) return "bhup";
+          List<Student>? l = await studentList();
+          if (l == null) return "error";
+          authenticated = studentInList(_loginData.name, l);
+          if (authenticated == null) return "Login failed";
         },
         onSubmitAnimationCompleted: () {
           Navigator.push(
@@ -86,20 +89,5 @@ class _FlutterAuthState extends State<FlutterAuth> {
         hideForgotPasswordButton: true,
       ),
     );
-  }
-
-  Future<Student?> checkUser(String email) async {
-    Student? req;
-    List<Student>? l = await studentList();
-    if (l != null) {
-      for (Student s in l) {
-        if (s.email == email) {
-          req = s;
-          break;
-        }
-      }
-    }
-
-    return req;
   }
 }

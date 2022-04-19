@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stive/api/clubCalls.dart';
+import 'package:stive/constants/misc.dart';
 import 'package:stive/models/club.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/Post/create_add_post.dart';
@@ -18,16 +19,17 @@ class ClubsDescription extends StatefulWidget {
 }
 
 class _ClubsDescriptionState extends State<ClubsDescription> {
-  bool switch_content = false;
-  bool member = false;
+  bool switchContent = false;
   @override
   Widget build(BuildContext context) {
-    for (Student s in widget.selected.members) {
-      if (s.id == widget.curr.id) {
-        member = true;
-        break;
-      }
-    }
+    widget.curr.coordinator =
+        studentInList(widget.curr.email, widget.selected.coordinators) == null
+            ? false
+            : true;
+    widget.curr.member =
+        studentInList(widget.curr.email, widget.selected.members) == null
+            ? false
+            : true;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.selected.name),
@@ -39,16 +41,16 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
             heroTag: "h1",
             onPressed: () {
               setState(() {
-                switch_content = !switch_content;
+                switchContent = !switchContent;
               });
             },
             child: const Icon(Icons.swap_horizontal_circle),
           ),
-          if (!switch_content)
+          if (!switchContent)
             TextButton(
                 onPressed: () async {
                   bool res = false;
-                  if (member) {
+                  if (widget.curr.member) {
                     res = await removeMemberFromClub(
                         widget.selected.id.toString(),
                         widget.curr.id.toString());
@@ -58,33 +60,38 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                   }
                   setState(() {
                     if (res) {
-                      member = !member;
+                      widget.curr.member = !widget.curr.member;
                       infoSnackBar("Success", context);
-                    } else
+                    } else {
                       errorSnackBar("Failed", context);
+                    }
                   });
                 },
-                child: Text(member ? "Leave Club" : "Join Club")),
+                child: Text(widget.curr.member ? "Leave Club" : "Join Club")),
           const SizedBox(
             width: 10,
           ),
-          switch_content
+          switchContent
               ? FloatingActionButton(
                   heroTag: "h2",
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              CreateAddPost(clubId: widget.selected.id)),
-                    );
+                    if (widget.curr.coordinator) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CreateAddPost(clubId: widget.selected.id)),
+                      );
+                    } else {
+                      errorSnackBar("Only for coordinators", context);
+                    }
                   },
                   child: const Icon(Icons.playlist_add_circle_sharp),
                 )
               : const SizedBox.shrink()
         ],
       ),
-      body: switch_content
+      body: switchContent
           ? ListView.builder(
               itemCount: widget.selected.posts.length,
               itemBuilder: (BuildContext ctx, int index) {
@@ -106,24 +113,34 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                     "Coordinators",
                     style: TextStyle(color: Colors.white),
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: widget.selected.coordinators.length,
-                          itemBuilder: (BuildContext ctx, int index) {
-                            return ListTile(
-                              leading: Image(
-                                  image: NetworkImage(widget.selected
-                                      .coordinators[index].profilePicUrl)),
-                              title: Text(
-                                  widget.selected.coordinators[index].name,
-                                  style: TextStyle(color: Colors.white)),
-                            );
-                          }),
-                    ],
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.selected.coordinators.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return ListTile(
+                          leading: Image(
+                              image: NetworkImage(widget
+                                  .selected.coordinators[index].profilePicUrl)),
+                          title: Text(widget.selected.coordinators[index].name,
+                              style: TextStyle(color: Colors.white)),
+                        );
+                      }),
+                  const Text(
+                    "Members",
+                    style: TextStyle(color: Colors.white),
                   ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.selected.members.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return ListTile(
+                          leading: Image(
+                              image: NetworkImage(widget
+                                  .selected.members[index].profilePicUrl)),
+                          title: Text(widget.selected.members[index].name,
+                              style: TextStyle(color: Colors.white)),
+                        );
+                      }),
                 ],
               ),
             ),

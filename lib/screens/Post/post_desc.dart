@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/Poll/add_poll.dart';
+import 'package:stive/widgets/misc_widgets.dart';
 import 'package:stive/widgets/poll.dart';
 
+// ignore: must_be_immutable
 class PostDescription extends StatelessWidget {
   Post selected;
   Student curr;
@@ -15,11 +17,15 @@ class PostDescription extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => PollAdd(selected: selected)),
-          );
+          if (curr.coordinator) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PollAdd(selected: selected)),
+            );
+          } else {
+            errorSnackBar("Only for coordinators!", context);
+          }
         },
         child: const Icon(Icons.add),
       ),
@@ -33,7 +39,7 @@ class PostDescription extends StatelessWidget {
           children: [
             Text(
               selected.description,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
             selected.polls.isNotEmpty
                 ? PollWidget(poll: selected.polls[0], curr: curr)

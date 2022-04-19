@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:stive/api/clubCalls.dart';
-import 'package:stive/api/postCalls.dart';
 import 'package:stive/dummy/post_data.dart';
-import 'package:stive/models/pollModel.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/widgets/poll.dart';
 
+// ignore: must_be_immutable
 class CreateAddPost extends StatefulWidget {
   String clubId;
-  CreateAddPost({required this.clubId});
+  CreateAddPost({Key? key, required this.clubId}) : super(key: key);
 
   @override
   State<CreateAddPost> createState() => _CreateAddPostState();

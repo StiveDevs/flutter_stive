@@ -1,6 +1,6 @@
 class Student {
   String id, name, rollNo, email, profilePicUrl;
-
+  bool coordinator = false, member = false;
   Student(
       {required this.rollNo,
       required this.name,

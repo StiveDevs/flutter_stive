@@ -41,7 +41,6 @@ Future<bool> createStudent(Student newUser) async {
     body: jsonEncode(newUser.toJson()),
   )
       .then((dynamic response) {
-    print(response.body);
     var resp = jsonDecode(response.body);
     if (response.statusCode == 200) {
       newUser.id = resp["upsertedId"];
