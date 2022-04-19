@@ -36,7 +36,7 @@ class PostDescription extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             selected.polls.isNotEmpty
-                ? PollWidget(poll: selected.polls[0])
+                ? PollWidget(poll: selected.polls[0], curr: curr)
                 : const SizedBox.shrink()
           ],
         ),

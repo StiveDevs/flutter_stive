@@ -8,7 +8,7 @@ class PollModel {
 
   PollModel(
       {required this.name,
-      required this.maxOptionsPerStudent,
+      this.maxOptionsPerStudent = 1,
       required this.options,
       this.id = ""});
 
