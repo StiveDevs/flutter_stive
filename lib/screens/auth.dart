@@ -4,6 +4,7 @@ import 'package:stive/api/studentCalls.dart';
 import 'package:stive/constants/misc.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/home_screen.dart';
+import 'package:stive/widgets/misc_widgets.dart';
 
 class FlutterAuth extends StatefulWidget {
   const FlutterAuth({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _FlutterAuthState extends State<FlutterAuth> {
         ),
         onSignup: (dat) async {
           String? val = dat.name;
-          if (val == null || val.isEmpty || val.split("@").length != 1) {
+          if (val == null || val.isEmpty || val.split("@").length != 2) {
             return "Invalid Email";
           }
           if (val.split("@")[1] != "iiitg.ac.in") {
@@ -51,6 +52,7 @@ class _FlutterAuthState extends State<FlutterAuth> {
               rollNo: dat.additionalSignupData!["rn"]!,
               name: dat.additionalSignupData!["name"]!,
               email: dat.name!);
+          print(authenticated);
           bool res = await createStudent(authenticated!);
           if (!res) {
             return "SignUp failed";
@@ -63,13 +65,17 @@ class _FlutterAuthState extends State<FlutterAuth> {
           if (authenticated == null) return "Login failed";
         },
         onSubmitAnimationCompleted: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen(
-                      currUser: authenticated!,
-                    )),
-          );
+          if (authenticated != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                        currUser: authenticated!,
+                      )),
+            );
+          } else {
+            errorSnackBar("Chud gaya app", context);
+          }
         },
         additionalSignupFields: [
           UserFormField(

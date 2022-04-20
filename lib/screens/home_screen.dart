@@ -32,8 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CreateClub()),
-                  );
+                    MaterialPageRoute(
+                        builder: (context) => CreateClub(
+                              curr: widget.currUser,
+                            )),
+                  ).then((val) {
+                    setState(() {});
+                  });
                 },
                 child: const Icon(Icons.add))
             : const SizedBox.shrink(),
@@ -100,7 +105,9 @@ Widget screenSwitch(String screen, Student currUser) {
         curr: currUser,
       );
     case "Settings":
-      return Settings();
+      return Settings(
+        curr: currUser,
+      );
     default:
       return const Text("Lmao");
   }

@@ -73,6 +73,8 @@ Future<bool> deleteClubById(String id) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
+    print(response.body);
+    print(response.statusCode);
     if (response.statusCode == 204 &&
         jsonDecode(response.body)["acknowledged"]) {
       res = true;

@@ -126,6 +126,7 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                       itemBuilder: (BuildContext ctx, int index) {
                         return ListTile(
                           leading: Image(
+                              width: 100,
                               image: NetworkImage(widget
                                   .selected.coordinators[index].profilePicUrl)),
                           title: Text(widget.selected.coordinators[index].name,
@@ -234,6 +235,29 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                           ),
                         );
                       }),
+                  if (widget.curr.email == techSecMail)
+                    TextButton(
+                        onPressed: () async {
+                          bool res = false;
+                          res = await deleteClubById(widget.selected.id);
+                          if (res) {
+                            Navigator.of(context).pop();
+                            infoSnackBar("Deleted Club", context);
+                          } else {
+                            errorSnackBar("Couldn't delete club", context);
+                          }
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            margin: const EdgeInsets.all(8.0),
+                            decoration: const BoxDecoration(
+                                color: Colors.red,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            child: const Text(
+                              "Delete Club",
+                              style: TextStyle(color: Colors.white),
+                            ))),
                 ],
               ),
             ),

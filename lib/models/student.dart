@@ -17,7 +17,6 @@ class Student {
         profilePicUrl = json["profilePicUrl"] ?? "";
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "rollNo": rollNo,
         "email": email,
         "profilePicUrl": profilePicUrl,

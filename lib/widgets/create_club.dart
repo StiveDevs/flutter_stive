@@ -1,44 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:stive/dummy/club_data.dart';
+import 'package:stive/api/clubCalls.dart';
+import 'package:stive/constants/misc.dart';
 import 'package:stive/models/club.dart';
+import 'package:stive/models/student.dart';
+import 'package:stive/widgets/misc_widgets.dart';
 
 class CreateClub extends StatefulWidget {
-  const CreateClub({Key? key}) : super(key: key);
+  Student curr;
+  CreateClub({Key? key, required this.curr}) : super(key: key);
 
   @override
   State<CreateClub> createState() => _CreateClubState();
 }
 
 class _CreateClubState extends State<CreateClub> {
-  String? name, description, logoUrl;
+  String name = "", description = "", logoUrl = "";
   final _form = GlobalKey<FormState>();
-  void _saveForm() {
+  void _saveForm() async {
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
     }
     _form.currentState!.save();
-    DUMMY_CLUB.add(Club(
-        id: "id",
-        name: name!,
-        description: description!,
-        logoUrl: logoUrl!,
-        coordinators: [],
+
+    Club created = Club(
+        name: name,
+        description: description,
+        coordinators: [widget.curr],
         members: [],
-        posts: []));
-    Navigator.of(context).pop();
+        posts: []);
+
+    bool res = await createClub(created);
+    if (res) {
+      Navigator.of(context).pop();
+      infoSnackBar("Created Club", context);
+    } else {
+      errorSnackBar("Error creating Club", context);
+    }
   }
 
   Widget buildName() {
     return TextFormField(
       style: const TextStyle(color: Colors.white),
-      decoration: const InputDecoration(
-          labelText: 'Name', labelStyle: TextStyle(color: Colors.white)),
+      decoration:
+          textInputDecoration.copyWith(label: const Text("Name"), hintText: ""),
       validator: (String? value) {
         if (value!.isEmpty) return 'Name is required';
       },
       onSaved: (String? value) {
-        name = value;
+        name = value ?? "";
       },
     );
   }
@@ -46,16 +56,14 @@ class _CreateClubState extends State<CreateClub> {
   Widget buildDescription() {
     return TextFormField(
       style: const TextStyle(color: Colors.white),
-      decoration: const InputDecoration(
-        labelText: 'Description',
-        labelStyle: TextStyle(color: Colors.white),
-      ),
+      decoration: textInputDecoration.copyWith(
+          label: const Text("Description"), hintText: ""),
       maxLines: 3,
       validator: (String? value) {
         if (value!.isEmpty) return 'Description is required';
       },
       onSaved: (String? value) {
-        description = value;
+        description = value ?? "";
       },
     );
   }
@@ -63,13 +71,13 @@ class _CreateClubState extends State<CreateClub> {
   Widget buildLogoUrl() {
     return TextFormField(
       style: const TextStyle(color: Colors.white),
-      decoration: const InputDecoration(
-          labelText: 'Logo Url', labelStyle: TextStyle(color: Colors.white)),
+      decoration: textInputDecoration.copyWith(
+          label: const Text("Logo Url"), hintText: ""),
       validator: (String? value) {
         if (value!.isEmpty) return 'Logo Url is required';
       },
       onSaved: (String? value) {
-        logoUrl = value;
+        logoUrl = value ?? "";
       },
     );
   }
@@ -84,6 +92,9 @@ class _CreateClubState extends State<CreateClub> {
           key: _form,
           child: Column(
             children: [
+              const SizedBox(
+                height: 35,
+              ),
               buildName(),
               const SizedBox(
                 height: 35,

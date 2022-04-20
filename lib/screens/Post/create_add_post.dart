@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stive/api/clubCalls.dart';
 import 'package:stive/api/postCalls.dart';
 import 'package:stive/constants/misc.dart';
-import 'package:stive/dummy/post_data.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/widgets/misc_widgets.dart';
 import 'package:stive/widgets/poll.dart';
@@ -104,6 +103,9 @@ class _CreateAddPostState extends State<CreateAddPost> {
               key: _form,
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 35,
+                  ),
                   buildTitle(),
                   const SizedBox(
                     height: 35,

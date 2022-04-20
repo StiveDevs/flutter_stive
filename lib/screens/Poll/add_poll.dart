@@ -13,7 +13,7 @@ class PollAdd extends StatefulWidget {
 
 class _PollAddState extends State<PollAdd> {
   late String question;
-  late List<Option> optionList;
+  List<Option> optionList = [];
   final _form = GlobalKey<FormState>();
   void _saveForm() {
     final isValid = _form.currentState!.validate();
@@ -21,8 +21,7 @@ class _PollAddState extends State<PollAdd> {
       return;
     }
     _form.currentState!.save();
-    PollModel poll = new PollModel(name: question, options: optionList);
-    widget.selected.polls.add(poll);
+    widget.selected.polls.add(PollModel(name: question, options: optionList));
     Navigator.of(context).pop();
   }
 
@@ -40,9 +39,23 @@ class _PollAddState extends State<PollAdd> {
     );
   }
 
-  // Widget buildOptions() {
-  //   return;
-  // }
+  Widget buildOptions(int index) {
+    return Column(
+      children: [
+        TextFormField(
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+                labelText: 'Option $index',
+                labelStyle: const TextStyle(color: Colors.white)),
+            validator: (String? value) {
+              if (value!.isEmpty) return 'Field is empty';
+            },
+            onSaved: (String? value) {
+              optionList.add(Option(name: value!, selectedBy: []));
+            }),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +71,19 @@ class _PollAddState extends State<PollAdd> {
               const SizedBox(
                 height: 35,
               ),
-              //buildOptions(),
+              buildOptions(1),
+              const SizedBox(
+                height: 35,
+              ),
+              buildOptions(2),
+              const SizedBox(
+                height: 35,
+              ),
+              buildOptions(3),
+              const SizedBox(
+                height: 35,
+              ),
+              buildOptions(4),
             ],
           )),
       floatingActionButton: FloatingActionButton(

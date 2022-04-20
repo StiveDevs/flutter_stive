@@ -36,6 +36,7 @@ class _ClubsState extends State<Clubs> {
                       return Card(
                         child: ListTile(
                           leading: Image(
+                              width: 100,
                               image:
                                   NetworkImage(snapshot.data![index].logoUrl)),
                           title: Text(
