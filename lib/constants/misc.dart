@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stive/models/student.dart';
 
 String techSecMail = "gstechnicalsgc@iiitg.ac.in";
+const String defaultImage =
+    "https://drive.google.com/uc?export=view&id=1edwpQvH_JURwGsArCc8NyPEe8EzdpzvQ";
 
 Student? studentInList(String email, List<Student> all) {
   Student? res;

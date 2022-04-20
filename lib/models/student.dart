@@ -1,3 +1,5 @@
+import 'package:stive/constants/misc.dart';
+
 class Student {
   String id, name, rollNo, email, profilePicUrl;
   bool coordinator = false, member = false;
@@ -5,8 +7,7 @@ class Student {
       {required this.rollNo,
       required this.name,
       required this.email,
-      this.profilePicUrl =
-          "https://drive.google.com/uc?export=view&id=1edwpQvH_JURwGsArCc8NyPEe8EzdpzvQ",
+      this.profilePicUrl = defaultImage,
       this.id = ""});
 
   Student.fromJSON(Map<String, dynamic> json)
@@ -14,7 +15,11 @@ class Student {
         name = json["name"] ?? "",
         rollNo = json["rollNo"] ?? "",
         email = json["email"] ?? "",
-        profilePicUrl = json["profilePicUrl"] ?? "";
+        profilePicUrl = json["profilePicUrl"] == null
+            ? defaultImage
+            : json["profilePicUrl"] == ""
+                ? defaultImage
+                : json["profilePicUrl"];
 
   Map<String, dynamic> toJson() => {
         "rollNo": rollNo,

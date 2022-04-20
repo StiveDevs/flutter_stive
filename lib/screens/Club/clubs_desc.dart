@@ -108,133 +108,205 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
           : Center(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Padding(padding: EdgeInsets.all(20)),
-                  Text(
-                    widget.selected.description,
-                    style: const TextStyle(color: Colors.white),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      "Description",
+                      style: TextStyle(color: Colors.white, fontSize: 30),
+                    ),
                   ),
-                  const Padding(padding: EdgeInsets.all(20)),
-                  const Text(
-                    "Coordinators",
-                    style: TextStyle(color: Colors.white),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[800],
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15.0))),
+                    child: Text(
+                      widget.selected.description,
+                      style: const TextStyle(color: Colors.white, fontSize: 15),
+                    ),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: widget.selected.coordinators.length,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return ListTile(
-                          leading: Image(
-                              width: 100,
-                              image: NetworkImage(widget
-                                  .selected.coordinators[index].profilePicUrl)),
-                          title: Text(widget.selected.coordinators[index].name,
-                              style: const TextStyle(color: Colors.white)),
-                          trailing: widget.curr.email == techSecMail
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.remove,
-                                    color: Colors.red,
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      "Coordinators",
+                      style: TextStyle(color: Colors.white, fontSize: 30),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15.0))),
+                    child: widget.selected.coordinators.isEmpty
+                        ? const Text(
+                            "No Coordinators",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: widget.selected.coordinators.length,
+                            itemBuilder: (BuildContext ctx, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  leading: Image(
+                                      width: 100,
+                                      image: NetworkImage(widget.selected
+                                          .coordinators[index].profilePicUrl)),
+                                  title: Text(
+                                      widget.selected.coordinators[index].name,
+                                      style:
+                                          const TextStyle(color: Colors.white)),
+                                  trailing: widget.curr.email == techSecMail
+                                      ? IconButton(
+                                          icon: const Icon(
+                                            Icons.remove,
+                                            color: Colors.red,
+                                          ),
+                                          onPressed: () async {
+                                            bool res =
+                                                await removeCoordinatorFromClub(
+                                                    widget.selected.id,
+                                                    widget
+                                                        .selected
+                                                        .coordinators[index]
+                                                        .id);
+                                            if (res) {
+                                              widget.selected.members.remove(
+                                                  widget.selected
+                                                      .coordinators[index]);
+                                              setState(() {
+                                                infoSnackBar(
+                                                    "Removed Coordinator",
+                                                    context);
+                                              });
+                                            } else {
+                                              errorSnackBar(
+                                                  "Error removing Coordinator",
+                                                  context);
+                                            }
+                                          },
+                                        )
+                                      : const SizedBox(),
+                                ),
+                              );
+                            }),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      "Members",
+                      style: TextStyle(color: Colors.white, fontSize: 30),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15.0))),
+                    child: widget.selected.members.isEmpty
+                        ? const Text(
+                            "No Members",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: widget.selected.members.length,
+                            itemBuilder: (BuildContext ctx, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  leading: Image(
+                                      width: 100,
+                                      image: NetworkImage(widget.selected
+                                          .members[index].profilePicUrl)),
+                                  title: Text(
+                                      widget.selected.members[index].name,
+                                      style:
+                                          const TextStyle(color: Colors.white)),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      widget.curr.coordinator
+                                          ? IconButton(
+                                              icon: const Icon(
+                                                Icons.remove,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: () async {
+                                                bool res =
+                                                    await removeMemberFromClub(
+                                                        widget.selected.id,
+                                                        widget.selected
+                                                            .members[index].id);
+                                                if (res) {
+                                                  widget.selected.members
+                                                      .remove(widget.selected
+                                                          .members[index]);
+                                                  setState(() {
+                                                    infoSnackBar(
+                                                        "Removed Member",
+                                                        context);
+                                                  });
+                                                } else {
+                                                  errorSnackBar(
+                                                      "Error removing member",
+                                                      context);
+                                                }
+                                              },
+                                            )
+                                          : const SizedBox(),
+                                      widget.curr.email == techSecMail
+                                          ? IconButton(
+                                              icon: Icon(
+                                                studentInList(
+                                                            widget
+                                                                .selected
+                                                                .members[index]
+                                                                .email,
+                                                            widget.selected
+                                                                .coordinators) ==
+                                                        null
+                                                    ? Icons.person_add
+                                                    : Icons.person_remove,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: () async {
+                                                bool res =
+                                                    await addCoordinatorToClub(
+                                                        widget.selected.id,
+                                                        widget.selected
+                                                            .members[index].id);
+                                                if (res) {
+                                                  widget.selected.coordinators
+                                                      .add(widget.selected
+                                                          .members[index]);
+                                                  setState(() {
+                                                    infoSnackBar(
+                                                        "Made Coordinator",
+                                                        context);
+                                                  });
+                                                } else {
+                                                  errorSnackBar(
+                                                      "Error adding Coordinator",
+                                                      context);
+                                                }
+                                              },
+                                            )
+                                          : const SizedBox(),
+                                    ],
                                   ),
-                                  onPressed: () async {
-                                    bool res = await removeCoordnatorFromClub(
-                                        widget.selected.id,
-                                        widget.selected.coordinators[index].id);
-                                    if (res) {
-                                      widget.selected.members.remove(
-                                          widget.selected.coordinators[index]);
-                                      setState(() {
-                                        infoSnackBar(
-                                            "Removed Coordinator", context);
-                                      });
-                                    } else {
-                                      errorSnackBar(
-                                          "Error removing Coordinator",
-                                          context);
-                                    }
-                                  },
-                                )
-                              : const SizedBox(),
-                        );
-                      }),
-                  const Text(
-                    "Members",
-                    style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            }),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: widget.selected.members.length,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return ListTile(
-                          leading: Image(
-                              image: NetworkImage(widget
-                                  .selected.members[index].profilePicUrl)),
-                          title: Text(widget.selected.members[index].name,
-                              style: const TextStyle(color: Colors.white)),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              widget.curr.coordinator
-                                  ? IconButton(
-                                      icon: const Icon(
-                                        Icons.remove,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed: () async {
-                                        bool res = await removeMemberFromClub(
-                                            widget.selected.id,
-                                            widget.selected.members[index].id);
-                                        if (res) {
-                                          widget.selected.members.remove(
-                                              widget.selected.members[index]);
-                                          setState(() {
-                                            infoSnackBar(
-                                                "Removed Member", context);
-                                          });
-                                        } else {
-                                          errorSnackBar(
-                                              "Error removing member", context);
-                                        }
-                                      },
-                                    )
-                                  : const SizedBox(),
-                              widget.curr.email == techSecMail
-                                  ? IconButton(
-                                      icon: Icon(
-                                        studentInList(
-                                                    widget.selected
-                                                        .members[index].email,
-                                                    widget.selected
-                                                        .coordinators) ==
-                                                null
-                                            ? Icons.person_add
-                                            : Icons.person_remove,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed: () async {
-                                        bool res = await addCoordinatorToClub(
-                                            widget.selected.id,
-                                            widget.selected.members[index].id);
-                                        if (res) {
-                                          widget.selected.coordinators.add(
-                                              widget.selected.members[index]);
-                                          setState(() {
-                                            infoSnackBar(
-                                                "Made Coordinator", context);
-                                          });
-                                        } else {
-                                          errorSnackBar(
-                                              "Error adding Coordinator",
-                                              context);
-                                        }
-                                      },
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                        );
-                      }),
                   if (widget.curr.email == techSecMail)
                     TextButton(
                         onPressed: () async {

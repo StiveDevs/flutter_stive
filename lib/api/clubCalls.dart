@@ -161,7 +161,7 @@ Future<bool> removeMemberFromClub(String club, String member) async {
   return res;
 }
 
-Future<bool> removeCoordnatorFromClub(String club, String coordinator) async {
+Future<bool> removeCoordinatorFromClub(String club, String coordinator) async {
   bool res = false;
   await http
       .patch(

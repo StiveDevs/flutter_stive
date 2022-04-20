@@ -52,7 +52,13 @@ class _FlutterAuthState extends State<FlutterAuth> {
               rollNo: dat.additionalSignupData!["rn"]!,
               name: dat.additionalSignupData!["name"]!,
               email: dat.name!);
-          print(authenticated);
+
+          List<Student>? l = await studentList();
+          if (l == null) return "error";
+
+          Student? temp = studentInList(authenticated!.email, l);
+          if (temp != null) return "User with email already exists";
+
           bool res = await createStudent(authenticated!);
           if (!res) {
             return "SignUp failed";
