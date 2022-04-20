@@ -6,6 +6,7 @@ import 'package:stive/models/student.dart';
 import 'package:stive/screens/Post/create_add_post.dart';
 import 'package:stive/screens/Post/post_tile.dart';
 import 'package:stive/widgets/misc_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 // ignore: must_be_immutable
 class ClubsDescription extends StatefulWidget {
@@ -52,27 +53,20 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                   bool res = false;
                   if (widget.curr.member) {
                     res = await removeMemberFromClub(
-                        widget.selected.id.toString(),
-                        widget.curr.id.toString());
+                        widget.selected.id, widget.curr.id);
                   } else {
-                    res = await addMemberToClub(widget.selected.id.toString(),
-                        widget.curr.id.toString());
+                    res = await addMemberToClub(
+                        widget.selected.id, widget.curr.id);
                   }
-                  if (res) {
-                    if (widget.curr.member) {
-                      widget.selected.members.remove(widget.curr);
-                    } else {
-                      widget.selected.members.add(widget.curr);
-                    }
-                    widget.curr.member = !widget.curr.member;
+                  Club? upd = await clubById(widget.selected.id);
+                  if (res && upd != null) {
+                    setState(() {
+                      widget.selected = upd;
+                    });
+                    infoSnackBar("Success", context);
+                  } else {
+                    errorSnackBar("Failed", context);
                   }
-                  setState(() {
-                    if (res) {
-                      infoSnackBar("Success", context);
-                    } else {
-                      errorSnackBar("Failed", context);
-                    }
-                  });
                 },
                 child: Text(widget.curr.member ? "Leave Club" : "Join Club")),
           const SizedBox(
@@ -88,12 +82,21 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                         MaterialPageRoute(
                             builder: (context) =>
                                 CreateAddPost(clubId: widget.selected.id)),
-                      );
+                      ).then((value) async {
+                        if (value) {
+                          Club? upd = await clubById(widget.selected.id);
+                          setState(() {
+                            if (upd != null) {
+                              widget.selected = upd;
+                            }
+                          });
+                        }
+                      });
                     }
                   },
                   child: widget.curr.coordinator
                       ? const Icon(Icons.playlist_add_circle_sharp)
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 )
               : const SizedBox.shrink()
         ],
@@ -106,8 +109,7 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                     curr: widget.curr, selected: widget.selected.posts[index]);
               })
           : Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
+              child: ListView(
                 children: [
                   const Padding(
                     padding: EdgeInsets.all(10.0),
@@ -154,10 +156,14 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ListTile(
-                                  leading: Image(
-                                      width: 100,
-                                      image: NetworkImage(widget.selected
-                                          .coordinators[index].profilePicUrl)),
+                                  leading: CachedNetworkImage(
+                                    imageUrl: widget.selected
+                                        .coordinators[index].profilePicUrl,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                  ),
                                   title: Text(
                                       widget.selected.coordinators[index].name,
                                       style:
@@ -176,19 +182,15 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                                                         .selected
                                                         .coordinators[index]
                                                         .id);
-                                            if (res) {
-                                              widget.selected.members.remove(
-                                                  widget.selected
-                                                      .coordinators[index]);
+                                            Club? upd = await clubById(
+                                                widget.selected.id);
+                                            if (res && upd != null) {
                                               setState(() {
-                                                infoSnackBar(
-                                                    "Removed Coordinator",
-                                                    context);
+                                                widget.selected = upd;
                                               });
+                                              infoSnackBar("Success", context);
                                             } else {
-                                              errorSnackBar(
-                                                  "Error removing Coordinator",
-                                                  context);
+                                              errorSnackBar("Failed", context);
                                             }
                                           },
                                         )
@@ -223,10 +225,14 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ListTile(
-                                  leading: Image(
-                                      width: 100,
-                                      image: NetworkImage(widget.selected
-                                          .members[index].profilePicUrl)),
+                                  leading: CachedNetworkImage(
+                                    imageUrl: widget
+                                        .selected.members[index].profilePicUrl,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                  ),
                                   title: Text(
                                       widget.selected.members[index].name,
                                       style:
@@ -284,19 +290,17 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                                                         widget.selected.id,
                                                         widget.selected
                                                             .members[index].id);
-                                                if (res) {
-                                                  widget.selected.coordinators
-                                                      .add(widget.selected
-                                                          .members[index]);
+                                                Club? upd = await clubById(
+                                                    widget.selected.id);
+                                                if (res && upd != null) {
                                                   setState(() {
-                                                    infoSnackBar(
-                                                        "Made Coordinator",
-                                                        context);
+                                                    widget.selected = upd;
                                                   });
+                                                  infoSnackBar(
+                                                      "Success", context);
                                                 } else {
                                                   errorSnackBar(
-                                                      "Error adding Coordinator",
-                                                      context);
+                                                      "Failed", context);
                                                 }
                                               },
                                             )

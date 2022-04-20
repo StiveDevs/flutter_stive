@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stive/constants/misc.dart';
 import 'package:stive/models/post.dart';
@@ -14,10 +15,14 @@ class PostTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Image(image: NetworkImage(selected.imageUrl)),
+        leading: CachedNetworkImage(
+          imageUrl: selected.imageUrl,
+          placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
         title: Text(
           selected.title,
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
         ),
         onTap: () {
           Navigator.push(

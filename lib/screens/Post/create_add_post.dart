@@ -28,13 +28,14 @@ class _CreateAddPostState extends State<CreateAddPost> {
     Post newPost = Post(
       title: title,
       description: description,
+      imageUrl: imageUrl,
       polls: [],
     );
     bool res = await createPost(newPost);
     if (res) {
       res = await addPostToClub(widget.clubId, newPost.id);
       if (res) {
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(res);
         infoSnackBar("Created post", context);
       }
     }

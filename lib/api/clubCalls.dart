@@ -93,9 +93,7 @@ Future<bool> addMemberToClub(String club, String member) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
@@ -113,9 +111,7 @@ Future<bool> addCoordinatorToClub(String club, String coordinator) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
@@ -133,9 +129,7 @@ Future<bool> addPostToClub(String club, String post) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
@@ -153,9 +147,7 @@ Future<bool> removeMemberFromClub(String club, String member) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
@@ -173,9 +165,7 @@ Future<bool> removeCoordinatorFromClub(String club, String coordinator) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
@@ -193,9 +183,7 @@ Future<bool> removePostToClub(String club, String post) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });

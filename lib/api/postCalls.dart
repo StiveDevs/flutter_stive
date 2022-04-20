@@ -95,9 +95,7 @@ Future<bool> addPollToPost(String post, String poll) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
@@ -115,9 +113,7 @@ Future<bool> removePollFromPost(String post, String poll) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });

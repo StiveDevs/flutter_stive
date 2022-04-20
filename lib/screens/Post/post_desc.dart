@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stive/api/postCalls.dart';
 import 'package:stive/models/post.dart';
@@ -36,7 +37,11 @@ class PostDescription extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Image(image: NetworkImage(selected.imageUrl)),
+            CachedNetworkImage(
+              imageUrl: selected.imageUrl,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
             Text(
               selected.description,
               style: const TextStyle(color: Colors.white),
