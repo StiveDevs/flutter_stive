@@ -12,7 +12,7 @@ Future<List<Option>?> optionList() async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = convertToOptionList(jsonDecode(response.body));
     }
   });
@@ -39,7 +39,7 @@ Future<bool> createOption(Option newOption) async {
     body: jsonEncode(newOption.toJson()),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       newOption.id = jsonDecode(response.body)["insertedId"];
       res = true;
     }
@@ -55,7 +55,7 @@ Future<Option?> optionById(String id) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = Option.fromJSON(jsonDecode(response.body));
     }
   });
@@ -71,7 +71,8 @@ Future<bool> deleteOptionById(String id) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 204 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"]) {
       res = true;
     }
@@ -91,7 +92,8 @@ Future<bool> optionSelectedByStudent(String option, String student) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }
@@ -110,7 +112,8 @@ Future<bool> optionUnSelectedByStudent(String option, String student) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }

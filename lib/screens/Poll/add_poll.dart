@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stive/api/pollCalls.dart';
+import 'package:stive/api/postCalls.dart';
 import 'package:stive/models/option.dart';
 import 'package:stive/models/pollModel.dart';
 import 'package:stive/models/post.dart';
+import 'package:stive/widgets/misc_widgets.dart';
 
 class PollAdd extends StatefulWidget {
   Post selected;
@@ -15,14 +18,24 @@ class _PollAddState extends State<PollAdd> {
   late String question;
   List<Option> optionList = [];
   final _form = GlobalKey<FormState>();
-  void _saveForm() {
+  Future<void> _saveForm() async {
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
     }
     _form.currentState!.save();
-    widget.selected.polls.add(PollModel(name: question, options: optionList));
-    Navigator.of(context).pop();
+    PollModel newPoll = PollModel(name: question, options: optionList);
+    bool res = await createPoll(newPoll);
+    if (res) {
+      res = await addPollToPost(widget.selected.id, newPoll.id);
+      if (res) {
+        Navigator.of(context).pop();
+        infoSnackBar("Created post", context);
+      }
+    }
+    if (!res) {
+      errorSnackBar("Error creating post", context);
+    }
   }
 
   Widget buildQuestion() {

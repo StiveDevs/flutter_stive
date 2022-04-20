@@ -12,7 +12,7 @@ Future<List<Post>?> postList() async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = convertToPostList(jsonDecode(response.body));
     }
   });
@@ -39,8 +39,7 @@ Future<bool> createPost(Post newPost) async {
     body: jsonEncode(newPost.toJson()),
   )
       .then((dynamic response) {
-    print(response.body);
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       newPost.id = jsonDecode(response.body)["insertedId"];
       res = true;
     }
@@ -56,7 +55,7 @@ Future<Post?> postById(String id) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = Post.fromJSON(jsonDecode(response.body));
     }
   });
@@ -66,13 +65,17 @@ Future<Post?> postById(String id) async {
 
 Future<bool> deletePostById(String id) async {
   bool res = false;
-  await http.delete(
+  await http
+      .delete(
     Uri.parse(tp + id),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-  ).then((dynamic response) {
-    if (response.statusCode == 204 &&
+    body: jsonEncode({}),
+  )
+      .then((dynamic response) {
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"]) {
       res = true;
     }
@@ -92,7 +95,8 @@ Future<bool> addPollToPost(String post, String poll) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }
@@ -111,7 +115,8 @@ Future<bool> removePollFromPost(String post, String poll) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }

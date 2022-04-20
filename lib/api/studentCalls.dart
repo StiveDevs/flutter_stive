@@ -13,7 +13,7 @@ Future<List<Student>?> studentList() async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = convertToStudentList(jsonDecode(response.body));
     }
   });
@@ -41,7 +41,7 @@ Future<bool> createStudent(Student newUser) async {
   )
       .then((dynamic response) {
     var resp = jsonDecode(response.body);
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       newUser.id = resp["upsertedId"];
       res = true;
     }
@@ -57,7 +57,7 @@ Future<Student?> studentById(String id) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = Student.fromJSON(jsonDecode(response.body));
     }
   });
@@ -76,7 +76,8 @@ Future<bool> deleteStudentById(String id) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 204 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"]) {
       res = true;
     }

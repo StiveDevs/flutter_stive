@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stive/api/postCalls.dart';
 import 'package:stive/models/post.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/Poll/add_poll.dart';
@@ -23,11 +24,9 @@ class PostDescription extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => PollAdd(selected: selected)),
             );
-          } else {
-            errorSnackBar("Only for coordinators!", context);
           }
         },
-        child: const Icon(Icons.add),
+        child: curr.coordinator ? Icon(Icons.add) : SizedBox.shrink(),
       ),
       appBar: AppBar(
         title: Text(
@@ -37,13 +36,38 @@ class PostDescription extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            Image(image: NetworkImage(selected.imageUrl)),
             Text(
               selected.description,
               style: const TextStyle(color: Colors.white),
             ),
             selected.polls.isNotEmpty
                 ? PollWidget(poll: selected.polls[0], curr: curr)
-                : const SizedBox.shrink()
+                : const SizedBox.shrink(),
+            curr.coordinator
+                ? TextButton(
+                    onPressed: () async {
+                      bool res = false;
+                      res = await deletePostById(selected.id);
+                      if (res) {
+                        Navigator.of(context).pop();
+                        infoSnackBar("Deleted Post", context);
+                      } else {
+                        errorSnackBar("Couldn't delete post", context);
+                      }
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.all(8.0),
+                        decoration: const BoxDecoration(
+                            color: Colors.red,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.0))),
+                        child: const Text(
+                          "Delete Post",
+                          style: TextStyle(color: Colors.white),
+                        )))
+                : const SizedBox.shrink(),
           ],
         ),
       ),

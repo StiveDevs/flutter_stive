@@ -20,39 +20,50 @@ class _UserFeedState extends State<UserFeed> {
   @override
   Widget build(BuildContext context) {
     Future<List<Post>?> postList = filterFeed();
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Flexible(
-          child: FutureBuilder(
-            future: postList,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Post>?> snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data!.isEmpty) {
-                  return const Text(
-                    "No data!",
-                    style: TextStyle(color: Colors.white),
-                  );
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Flexible(
+            child: FutureBuilder(
+              future: postList,
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Post>?> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return Container(
+                      padding: const EdgeInsets.all(18.0),
+                      margin: const EdgeInsets.all(18.0),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[900],
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15.0))),
+                      child: const Text("No data to show",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          )),
+                    );
+                  }
+                  return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return PostTile(
+                          selected: snapshot.data![index],
+                          curr: widget.curr,
+                        );
+                      });
+                } else if (snapshot.hasError) {
+                  return const ErrorDisplay();
+                } else {
+                  return const Center(child: LoadingWidget());
                 }
-                return ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, index) {
-                      return PostTile(
-                        selected: snapshot.data![index],
-                        curr: widget.curr,
-                      );
-                    });
-              } else if (snapshot.hasError) {
-                return const ErrorDisplay();
-              } else {
-                return const Center(child: LoadingWidget());
-              }
-            },
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

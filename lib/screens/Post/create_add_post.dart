@@ -28,8 +28,6 @@ class _CreateAddPostState extends State<CreateAddPost> {
     Post newPost = Post(
       title: title,
       description: description,
-      postFrom: DateTime.now(),
-      postTill: DateTime.now(),
       polls: [],
     );
     bool res = await createPost(newPost);
@@ -69,7 +67,7 @@ class _CreateAddPostState extends State<CreateAddPost> {
         if (value == null || value.isEmpty) return 'Description is required';
       },
       onSaved: (String? value) {
-        title = value ?? "";
+        description = value ?? "";
       },
     );
   }

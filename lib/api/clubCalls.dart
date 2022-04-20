@@ -12,7 +12,7 @@ Future<List<Club>?> clubList() async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = convertToClubList(jsonDecode(response.body));
     }
   });
@@ -38,7 +38,7 @@ Future<bool> createClub(Club newClub) async {
     body: jsonEncode(newClub.toJson()),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       newClub.id = jsonDecode(response.body)["insertedId"];
       res = true;
     }
@@ -54,7 +54,7 @@ Future<Club?> clubById(String id) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode == 200) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = Club.fromJSON(jsonDecode(response.body));
     }
   });
@@ -73,8 +73,6 @@ Future<bool> deleteClubById(String id) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    print(response.body);
-    print(response.statusCode);
     if (response.statusCode == 204 &&
         jsonDecode(response.body)["acknowledged"]) {
       res = true;
@@ -95,7 +93,8 @@ Future<bool> addMemberToClub(String club, String member) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }
@@ -114,7 +113,8 @@ Future<bool> addCoordinatorToClub(String club, String coordinator) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }
@@ -133,8 +133,8 @@ Future<bool> addPostToClub(String club, String post) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    print(response.body);
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }
@@ -153,7 +153,8 @@ Future<bool> removeMemberFromClub(String club, String member) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }
@@ -172,7 +173,8 @@ Future<bool> removeCoordinatorFromClub(String club, String coordinator) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }
@@ -191,7 +193,8 @@ Future<bool> removePostToClub(String club, String post) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode == 200 &&
+    if (response.statusCode >= 200 &&
+        response.statusCode <= 210 &&
         jsonDecode(response.body)["acknowledged"] == true) {
       res = true;
     }

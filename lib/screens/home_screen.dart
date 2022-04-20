@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/settings.dart';
 import 'package:stive/screens/user_feed.dart';
-import 'package:stive/widgets/create_club.dart';
+import 'package:stive/screens/Club/create_club.dart';
 
 import 'Club/clubs.dart';
 

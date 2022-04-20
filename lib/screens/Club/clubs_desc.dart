@@ -4,10 +4,10 @@ import 'package:stive/constants/misc.dart';
 import 'package:stive/models/club.dart';
 import 'package:stive/models/student.dart';
 import 'package:stive/screens/Post/create_add_post.dart';
-import 'package:stive/screens/Post/post_desc.dart';
 import 'package:stive/screens/Post/post_tile.dart';
 import 'package:stive/widgets/misc_widgets.dart';
 
+// ignore: must_be_immutable
 class ClubsDescription extends StatefulWidget {
   Club selected;
   Student curr;
@@ -89,11 +89,11 @@ class _ClubsDescriptionState extends State<ClubsDescription> {
                             builder: (context) =>
                                 CreateAddPost(clubId: widget.selected.id)),
                       );
-                    } else {
-                      errorSnackBar("Only for coordinators", context);
                     }
                   },
-                  child: const Icon(Icons.playlist_add_circle_sharp),
+                  child: widget.curr.coordinator
+                      ? const Icon(Icons.playlist_add_circle_sharp)
+                      : SizedBox.shrink(),
                 )
               : const SizedBox.shrink()
         ],
