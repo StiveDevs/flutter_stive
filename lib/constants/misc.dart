@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stive/models/student.dart';
 
+String techSecMail = "gstechnicalsgc@iiitg.ac.in";
+
 Student? studentInList(String email, List<Student> all) {
   Student? res;
   for (Student s in all) {

@@ -101,7 +101,7 @@ Future<bool> addMemberToClub(String club, String member) async {
   return res;
 }
 
-Future<bool> addCoordnatorToClub(String club, String coordinator) async {
+Future<bool> addCoordinatorToClub(String club, String coordinator) async {
   bool res = false;
   await http
       .patch(
