@@ -28,8 +28,8 @@ class _FlutterAuthState extends State<FlutterAuth> {
       },
       child: FlutterLogin(
         title: "Stive",
-        savedEmail: "ayush.das@iiitg.ac.in",
-        savedPassword: "onzy bonzy",
+        savedEmail: "@iiitg.ac.in",
+        savedPassword: "",
         theme: LoginTheme(
           primaryColor: Theme.of(context).primaryColor,
           accentColor: Theme.of(context).colorScheme.secondary,
@@ -51,7 +51,10 @@ class _FlutterAuthState extends State<FlutterAuth> {
           authenticated = Student(
               rollNo: dat.additionalSignupData!["rn"]!,
               name: dat.additionalSignupData!["name"]!,
-              email: dat.name!);
+              email: dat.name!,
+              profilePicUrl: dat.additionalSignupData!["pic"]!);
+
+          if (authenticated == null) return "App error";
 
           List<Student>? l = await studentList();
           if (l == null) return "error";
@@ -80,7 +83,7 @@ class _FlutterAuthState extends State<FlutterAuth> {
                       )),
             );
           } else {
-            errorSnackBar("Chud gaya app", context);
+            errorSnackBar("Internal error, Use login manually", context);
           }
         },
         additionalSignupFields: [
@@ -95,6 +98,10 @@ class _FlutterAuthState extends State<FlutterAuth> {
             displayName: "Roll Numer",
             fieldValidator: (val) =>
                 val!.isEmpty ? 'Enter your roll number' : null,
+          ),
+          const UserFormField(
+            keyName: "pic",
+            displayName: "Profile Pic Url",
           ),
         ],
         onRecoverPassword: (dat) => "Recovery" as Future<String>,

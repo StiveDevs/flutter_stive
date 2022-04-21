@@ -71,9 +71,7 @@ Future<bool> deletePollById(String id) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
   ).then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"]) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
@@ -92,9 +90,7 @@ Future<bool> addOptionToPoll(String poll, String option) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
@@ -112,9 +108,7 @@ Future<bool> optionUnSelectedByStudent(String poll, String option) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"] == true) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });

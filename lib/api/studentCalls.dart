@@ -76,9 +76,7 @@ Future<bool> deleteStudentById(String id) async {
     body: jsonEncode({}),
   )
       .then((dynamic response) {
-    if (response.statusCode >= 200 &&
-        response.statusCode <= 210 &&
-        jsonDecode(response.body)["acknowledged"]) {
+    if (response.statusCode >= 200 && response.statusCode <= 210) {
       res = true;
     }
   });
